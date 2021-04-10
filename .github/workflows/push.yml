@@ -1,0 +1,26 @@
+name: 'Deploy CloudFormation Stack - Beanstalk,S3' # S3, CF Stack
+on:
+  push:
+    branches:
+    - master
+    pull_request:
+
+jobs:
+  deploy:
+  runs-on: ubuntu-latest
+  steps:
+  - name: Checkout
+    uses: actions/checkout@v2
+  
+  # - name: mgenteluci/cloudformation-deploy-action@v1.4.0
+  #   env:
+  #     TEMPLATE: ''
+    
+  - name: Deploy Stack CF
+    working-directory: infra
+    id: init
+    uses: aws-action/aws-cloudformation-github-deploy@v1
+    with:
+      name: beanstalk-test-jsanchez-stack-ga
+      template: beanstalk-ga.yaml
+      # parameter-overrides: "env-bean"
