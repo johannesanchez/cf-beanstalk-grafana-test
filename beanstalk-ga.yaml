@@ -35,10 +35,10 @@ Resources:
       ApplicationName:
         Ref: sampleApplication
       Description: AWS ElasticBeanstalk Grafana Application Version
-      # SourceBundle:
-      #   # S3Bucket: !Sub "beanstalk-test-jsanchez"
-      #   S3Bucket: !Sub "eb-test-jsanchez"
-      #   S3Key: deploy.zip
+      SourceBundle:
+        # S3Bucket: !Sub "beanstalk-test-jsanchez"
+        S3Bucket: !Sub "eb-test-jsanchez"
+        S3Key: deploy.zip
 
   sampleConfigurationTemplate:
     Type: AWS::ElasticBeanstalk::ConfigurationTemplate
