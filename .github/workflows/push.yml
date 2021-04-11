@@ -36,14 +36,15 @@ jobs:
       run: aws s3 mb s3://eb-test-jsanchez --region us-east-1
 
     - name: Copy .zip dockerfile to S3 bucket
-      run: aws s3 sync ./docker/deploy.zip s3://eb-test-jsanchez
+      working-directory: ./docker
+      run: aws s3 sync deploy.zip s3://eb-test-jsanchez
       # !!! Add new feature::: No syncing if file exist
 
-    # - name: Deploy Stack CF
-    #   id: beanstalk-stack
-    #   uses: aws-actions/aws-cloudformation-github-deploy@v1
-    #   with:
-    #     name: beanstalk-jsanchez-stack-ga
-    #     template: beanstalk-ga.yaml
-    #     no-fail-on-empty-changeset: "1"
-    #     # parameter-overrides: "env-bean"
+    - name: Deploy Stack CF
+      id: beanstalk-stack
+      uses: aws-actions/aws-cloudformation-github-deploy@v1
+      with:
+        name: beanstalk-jsanchez-stack-ga
+        template: beanstalk-ga.yaml
+        no-fail-on-empty-changeset: "1"
+        # parameter-overrides: "env-bean"

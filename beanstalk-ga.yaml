@@ -6,15 +6,17 @@ AWSTemplateFormatVersion: '2010-09-09'
 #     Description: eb-test
 
 Resources:
-  S3Bucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      AccessControl: Private
-      # BucketName: !Ref BucketNameParameter
-      BucketName: eb-test-jsanchez
-      VersioningConfiguration:
-        Status: Enabled
-      # Tags: eb-test
+
+
+  # S3Bucket:
+  #   Type: AWS::S3::Bucket
+  #   Properties:
+  #     AccessControl: Private
+  #     # BucketName: !Ref BucketNameParameter
+  #     BucketName: eb-test-jsanchez
+  #     VersioningConfiguration:
+  #       Status: Enabled
+  #     # Tags: eb-test
 
 # To add the initial bucket with the zip file
   # S3CustomResource:
