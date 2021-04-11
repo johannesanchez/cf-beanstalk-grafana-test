@@ -14,7 +14,7 @@ Resources:
       BucketName: eb-test
       VersioningConfiguration:
         Status: Enabled
-      Tags: eb-test
+      # Tags: eb-test
 
 # To add the initial bucket with the zip file
   # S3CustomResource:
