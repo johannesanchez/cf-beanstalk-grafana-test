@@ -31,7 +31,7 @@ jobs:
       working-directory: ./docker
       run: zip -r deploy.zip *
     
-    - name: zip the dockerfile and docker-compose
+    - name: list files and dirs
       working-directory: ./docker
       run: ls -la
 
@@ -41,7 +41,7 @@ jobs:
 
     - name: Copy .zip dockerfile to S3 bucket
       working-directory: ./docker
-      run: aws s3 sync deploy.zip s3://eb-test-jsanchez
+      run: aws s3 cp deploy.zip s3://eb-test-jsanchez
       # !!! Add new feature::: No syncing if file exist
 
     - name: Deploy Stack CF
