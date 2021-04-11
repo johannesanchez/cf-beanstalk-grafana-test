@@ -1,9 +1,33 @@
 AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  BucketNameParameter:
+    Type: String
+    Description: eb-test
+
 Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: !Ref BucketNameParameter
+      VersioningConfiguration:
+        Status: Enabled
+      Tags: eb-test
+
+# To add the initial bucket with the zip file
+  # S3CustomResource:
+  #   Type: Custom::S3CustomResource
+  #   Properties:
+  #     ServiceToken: !GetAtt AWSLambdaFunction.Arn
+  #     the_bucket: !Ref SampleS3Bucket
+  #     dirs_to_create: !Ref DirsToCreate
+
   sampleApplication:
     Type: AWS::ElasticBeanstalk::Application
     Properties:
       Description: AWS Elastic Beanstalk Application
+
   sampleApplicationVersion:
     Type: AWS::ElasticBeanstalk::ApplicationVersion
     Properties:
@@ -11,8 +35,10 @@ Resources:
         Ref: sampleApplication
       Description: AWS ElasticBeanstalk Grafana Application Version
       SourceBundle:
-        S3Bucket: !Sub "beanstalk-test-jsanchez"
+        # S3Bucket: !Sub "beanstalk-test-jsanchez"
+        S3Bucket: !Sub "eb-test"
         S3Key: deploy.zip
+
   sampleConfigurationTemplate:
     Type: AWS::ElasticBeanstalk::ConfigurationTemplate
     Properties:
@@ -33,6 +59,7 @@ Resources:
         OptionName: IamInstanceProfile
         Value: !Ref MyInstanceProfile        
       SolutionStackName: 64bit Amazon Linux 2018.03 v2.16.6 running Docker 19.03.13-ce
+
   sampleEnvironment:
     Type: AWS::ElasticBeanstalk::Environment
     Properties:
@@ -43,6 +70,7 @@ Resources:
         Ref: sampleConfigurationTemplate
       VersionLabel:
         Ref: sampleApplicationVersion
+
   MyInstanceRole:
     Type: AWS::IAM::Role
     Properties: 
@@ -60,11 +88,14 @@ Resources:
         - arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier
         - arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker
         - arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier
+        
   MyInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties: 
       Roles:
         - !Ref MyInstanceRole
+
+# Outputs:
 
 # Create S3 bucket
 #
