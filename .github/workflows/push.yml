@@ -29,15 +29,15 @@ jobs:
 
     - name: zip the dockerfile and docker-compose
       working-directory: ./docker
-      run: zip -r deploy.zip *
+      run: zip -r deploy.zip * && aws s3 mb s3://eb-test-jsanchez --region us-east-1 && aws s3 sync deploy.zip s3://eb-test-jsanchez
 
-    - name: Create S3 Bucket for the first time
-      working-directory: ./docker
-      run: aws s3 mb s3://eb-test-jsanchez --region us-east-1
+    # - name: Create S3 Bucket for the first time
+    #   working-directory: ./docker
+    #   run: aws s3 mb s3://eb-test-jsanchez --region us-east-1
 
-    - name: Copy .zip dockerfile to S3 bucket
-      working-directory: ./docker
-      run: aws s3 sync deploy.zip s3://eb-test-jsanchez
+    # - name: Copy .zip dockerfile to S3 bucket
+    #   working-directory: ./docker
+    #   run: aws s3 sync deploy.zip s3://eb-test-jsanchez
       # !!! Add new feature::: No syncing if file exist
 
     - name: Deploy Stack CF
