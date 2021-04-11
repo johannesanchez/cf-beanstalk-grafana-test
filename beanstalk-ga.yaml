@@ -51,10 +51,16 @@ Resources:
       OptionSettings:
       - Namespace: aws:autoscaling:asg
         OptionName: MinSize
-        Value: '2'
+        Value: '1'
       - Namespace: aws:autoscaling:asg
         OptionName: MaxSize
-        Value: '3'
+        Value: '2'
+      - Namespace: aws:autoscaling:launchconfiguration
+        OptionName: InstanceType
+        Value: 't3.nano'
+      - Namespace: aws:ec2:instances
+        OptioName: InstanceType
+        Value: 't3.nano,t3.micro'      
       - Namespace: aws:elasticbeanstalk:environment
         OptionName: EnvironmentType
         Value: LoadBalanced
