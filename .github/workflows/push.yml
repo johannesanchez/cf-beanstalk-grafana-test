@@ -6,7 +6,8 @@ on:
     pull_request:
 
 jobs:
-  deploy:
+  beanstalk:
+    name: Deploy Beanstalk Env
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -18,13 +19,14 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
         # aws-region: ${{ github.event.inputs.region }}
 
     - name: Deploy Stack CF
-      working-directory: infra
-      id: init
+      id: beanstalk-stack
       uses: aws-actions/aws-cloudformation-github-deploy@v1
       with:
-        name: beanstalk-test-jsanchez-stack-ga
+        # name: beanstalk-jsanchez-stack-ga
         template: beanstalk-ga.yaml
+        no-fail-on-empty-changeset: "1"
         # parameter-overrides: "env-bean"
