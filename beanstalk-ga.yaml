@@ -11,7 +11,7 @@ Resources:
     Properties:
       AccessControl: Private
       # BucketName: !Ref BucketNameParameter
-      BucketName: eb-test
+      BucketName: eb-test-jsanchez
       VersioningConfiguration:
         Status: Enabled
       # Tags: eb-test
@@ -37,7 +37,7 @@ Resources:
       Description: AWS ElasticBeanstalk Grafana Application Version
       SourceBundle:
         # S3Bucket: !Sub "beanstalk-test-jsanchez"
-        S3Bucket: !Sub "eb-test"
+        S3Bucket: !Sub "eb-test-jsanchez"
         S3Key: deploy.zip
 
   sampleConfigurationTemplate:
