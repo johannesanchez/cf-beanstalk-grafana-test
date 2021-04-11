@@ -23,7 +23,7 @@ jobs:
         # aws-region: ${{ github.event.inputs.region }}
 
     - name: Deploy Stack CF
-      working-directory: ./app
+      working-directory: ./infra
       id: beanstalk-stack
       uses: aws-actions/aws-cloudformation-github-deploy@v1
       with:
