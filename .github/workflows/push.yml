@@ -7,20 +7,24 @@ on:
 
 jobs:
   deploy:
-  runs-on: ubuntu-latest
-  steps:
-  - name: Checkout
-    uses: actions/checkout@v2
-  
-  # - name: mgenteluci/cloudformation-deploy-action@v1.4.0
-  #   env:
-  #     TEMPLATE: ''
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
     
-  - name: Deploy Stack CF
-    working-directory: infra
-    id: init
-    uses: aws-action/aws-cloudformation-github-deploy@v1
-    with:
-      name: beanstalk-test-jsanchez-stack-ga
-      template: beanstalk-ga.yaml
-      # parameter-overrides: "env-bean"
+    - name: Configure AWS credentials
+      id: creds
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # aws-region: ${{ github.event.inputs.region }}
+
+    - name: Deploy Stack CF
+      working-directory: infra
+      id: init
+      uses: aws-action/aws-cloudformation-github-deploy@v1
+      with:
+        name: beanstalk-test-jsanchez-stack-ga
+        template: beanstalk-ga.yaml
+        # parameter-overrides: "env-bean"
