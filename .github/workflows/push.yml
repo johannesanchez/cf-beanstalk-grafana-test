@@ -23,7 +23,7 @@ jobs:
     - name: Deploy Stack CF
       working-directory: infra
       id: init
-      uses: aws-action/aws-cloudformation-github-deploy@v1
+      uses: aws-actions/aws-cloudformation-github-deploy@v1
       with:
         name: beanstalk-test-jsanchez-stack-ga
         template: beanstalk-ga.yaml

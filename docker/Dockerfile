@@ -1,0 +1,9 @@
+# FROM grafana/grafana:${TAG_GRAFANA}
+FROM grafana/grafana:7.5.2
+EXPOSE 3000
+# Puedo incluir un CICD en AWS para ? o para el ejercicio no es necesario.
+# Y si puedo incluir el CICD, hay restricciones para hacerlo outside AWS, por ejemplo con Github Actions? pensando en reducir el costo del pipeline en AWS.
+
+# Para el punto de crear la imagen de docker de grafana, tengo dos aproximaciones:
+# 1. Creo que el ejercicio quiere evaluar la construcción de un Dockerfile con imagen de grafana. Puedo contruir la imagen de grafana a mano. 
+# 2. Pero mi segunda opción es que la imagen de grafana ya viene lista y no tendría por que reconstruirla.

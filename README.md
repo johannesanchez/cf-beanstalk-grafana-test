@@ -1,3 +1,9 @@
+# GITHUB ACTIONS
+* Github
+    - Create repo
+    - Configure aws secrets
+
+
 # cf-beanstalk-grafana-test
 
 1. Create Makefile.settings (Define the env vars)
@@ -42,6 +48,9 @@ aws elasticbeanstalk create-environment --application-name avengers \
 
 
 # upload the .zip
+workdir docker
+zip -r deploy.zip *
+aws s3 cp deploy.zip s3://beanstalk-manual/
 
 # upadte the application on beanstalk
 
