@@ -99,3 +99,10 @@ zip index.zip index.html
 * Cloudfront Template:
     - Modification to instance type to save money (tests always with small instances)
     -  
+
+# Improvements
+Issue1:
+When deploy stack CFN
+Stack:arn:aws:cloudformation:us-east-1:***:stack/beanstalk-jsanchez-stack-ga/5bd66330-9b39-11eb-b04a-0eabd37574d3 is in ROLLBACK_COMPLETE state and can not be updated.
+
+--- If get result ROLLBACK_COMPLETE -->>> create a new stack (move all the app) and delete the old
