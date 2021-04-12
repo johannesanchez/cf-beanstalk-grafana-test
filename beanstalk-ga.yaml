@@ -1,6 +1,12 @@
 AWSTemplateFormatVersion: '2010-09-09'
 
-# Parameters:
+Parameters:
+  GrafanaInstance:
+    AllowedValues:
+      - t3.nano
+      - t3.micro
+      - t2.nano
+      - t2.micro
 #   BucketNameParameter:
 #     Type: String
 #     Description: eb-test
@@ -57,10 +63,10 @@ Resources:
         Value: '2'
       - Namespace: aws:autoscaling:launchconfiguration
         OptionName: InstanceType
-        Value: 't3.nano'
-      - Namespace: aws:ec2:instances
-        OptioName: InstanceType
-        Value: 't3.nano,t3.micro'      
+        Value: !Ref GrafanaInstance
+      # - Namespace: aws:ec2:instances
+      #   OptioName: InstanceType
+      #   Value: 't3.nano,t3.micro'      
       - Namespace: aws:elasticbeanstalk:environment
         OptionName: EnvironmentType
         Value: LoadBalanced
