@@ -7,6 +7,10 @@ Parameters:
       - t3.micro
       - t2.nano
       - t2.micro
+    ConstraintDescription: It must be a valid EC2 Type
+    Default: t3.nano
+    Description: Instance Type for Grafana
+    Type: String
 #   BucketNameParameter:
 #     Type: String
 #     Description: eb-test
