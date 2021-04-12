@@ -93,3 +93,9 @@ aws elasticbeanstalk update-environment --application-name avengers \
 # Dev User
 zip index.zip index.html
 
+
+
+
+* Cloudfront Template:
+    - Modification to instance type to save money (tests always with small instances)
+    -  
