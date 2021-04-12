@@ -6,9 +6,11 @@ on:
     pull_request:
 
 jobs:
-  beanstalk:
+  beanstalk-prod:
     name: Deploy Beanstalk Env
     runs-on: ubuntu-latest
+    env:
+      bucketName: teravision-eb-test-jsanchez
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -37,11 +39,12 @@ jobs:
 
     - name: Create S3 Bucket for the first time
       working-directory: ./docker
-      run: aws s3 mb s3://eb-test-jsanchez --region us-east-1
+      run: aws s3 mb s3://${bucketName} --region us-east-1
+      # run: aws s3 mb s3://eb-test-jsanchez --region us-east-1
 
     - name: Copy .zip dockerfile to S3 bucket
       working-directory: ./docker
-      run: aws s3 cp deploy.zip s3://eb-test-jsanchez
+      run: aws s3 cp deploy.zip s3://${bucketName}
       # !!! Add new feature::: No syncing if file exist
 
     - name: Deploy Stack CF
