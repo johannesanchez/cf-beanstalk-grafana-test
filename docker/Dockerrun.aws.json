@@ -1,0 +1,51 @@
+{
+    "containerDefinitions": [
+        {
+            "environment": [
+                {
+                    "name": "GF_SECURITY_ADMIN_PASSWORD",
+                    "value": "MYPASSGRAFANA"
+                },
+                {
+                    "name": "GF_USERS_ALLOW_SIGN_UP",
+                    "value": "false"
+                },
+                {
+                    "name": "GF_SERVER_DOMAIN",
+                    "value": "myrul.com"
+                },
+                {
+                    "name": "GF_SMTP_ENABLED",
+                    "value": "true"
+                },
+                {
+                    "name": "GF_SMTP_HOST",
+                    "value": "smtp.gmail.com:587"
+                },
+                {
+                    "name": "GF_SMTP_USER",
+                    "value": "myemail@gmail.com"
+                },
+                {
+                    "name": "GF_SMTP_PASSWORD",
+                    "value": "mypassword"
+                },
+                {
+                    "name": "GF_SMTP_FROM_ADDRESS",
+                    "value": "myemail@gmail.com"
+                }
+            ],
+            "essential": true,
+            "image": "grafana/grafana:7.5.2",
+            "name": "grafana",
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000
+                }
+            ]
+        }
+    ],
+    "family": "",
+    "volumes": []
+}

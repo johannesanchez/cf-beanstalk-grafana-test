@@ -10,7 +10,10 @@ jobs:
     name: Deploy Beanstalk Env
     runs-on: ubuntu-latest
     env:
-      bucketName: teravision-eb-test-jsanchez
+      projectName: CFNBeanstalk
+      # bucketName: teravision-eb-test-jsanchez
+      bucketName: eb-jsanchez
+    
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -28,6 +31,16 @@ jobs:
     #     Set envs like: stack version, beanstalk env to update
 
     # - name: Verify if bucket exist
+    - name: build and push to docker
+      working-directory: ./docker
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: ${{ github.repository }}
+        tag_with_ref: true
+        tag_with_sha: true
+        tags: ${{ github.sha }}
 
     - name: zip the dockerfile and docker-compose
       working-directory: ./docker
@@ -51,7 +64,18 @@ jobs:
       id: beanstalk-stack
       uses: aws-actions/aws-cloudformation-github-deploy@v1
       with:
-        name: beanstalk-jsanchez-stack-ga
-        template: beanstalk-ga.yaml
+        name: ${projectName}
+        template: beanstalk-cfn.yaml
         no-fail-on-empty-changeset: "1"
         # parameter-overrides: "env-bean"
+    
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: general
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_MESSAGE: 'Post Content :Teravision:'
+        SLACK_TITLE: Post Title
+        SLACK_USERNAME: TeraBot
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

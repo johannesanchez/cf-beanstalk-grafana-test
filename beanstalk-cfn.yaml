@@ -36,27 +36,27 @@ Resources:
   #     the_bucket: !Ref SampleS3Bucket
   #     dirs_to_create: !Ref DirsToCreate
 
-  sampleApplication:
+  ebApplication:
     Type: AWS::ElasticBeanstalk::Application
     Properties:
       Description: AWS Elastic Beanstalk Application
 
-  sampleApplicationVersion:
+  ebApplicationVersion:
     Type: AWS::ElasticBeanstalk::ApplicationVersion
     Properties:
       ApplicationName:
-        Ref: sampleApplication
+        Ref: ebApplication
       Description: AWS ElasticBeanstalk Grafana Application Version
       SourceBundle:
-        # S3Bucket: !Sub "eb-test-jsanchez"
-        S3Bucket: !Sub "teravision-eb-test-jsanchez"
+        S3Bucket: !Sub "eb-jsanchez"
+        # S3Bucket: !Sub "teravision-eb-test-jsanchez"
         S3Key: deploy.zip
 
-  sampleConfigurationTemplate:
+  ebConfigurationTemplate:
     Type: AWS::ElasticBeanstalk::ConfigurationTemplate
     Properties:
       ApplicationName:
-        Ref: sampleApplication
+        Ref: ebApplication
       Description: AWS ElasticBeanstalk Configuration
       OptionSettings:
       - Namespace: aws:autoscaling:asg
@@ -83,12 +83,12 @@ Resources:
     Type: AWS::ElasticBeanstalk::Environment
     Properties:
       ApplicationName:
-        Ref: sampleApplication
+        Ref: ebApplication
       Description: AWS ElasticBeanstalk Environment
       TemplateName:
-        Ref: sampleConfigurationTemplate
+        Ref: ebConfigurationTemplate
       VersionLabel:
-        Ref: sampleApplicationVersion
+        Ref: ebApplicationVersion
 
   MyInstanceRole:
     Type: AWS::IAM::Role
@@ -114,7 +114,3 @@ Resources:
       Roles:
         - !Ref MyInstanceRole
 
-# Outputs:
-
-# Create S3 bucket
-#
