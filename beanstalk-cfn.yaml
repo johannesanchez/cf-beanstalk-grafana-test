@@ -79,7 +79,7 @@ Resources:
         Value: !Ref MyInstanceProfile        
       SolutionStackName: 64bit Amazon Linux 2018.03 v2.16.6 running Docker 19.03.13-ce
 
-  sampleEnvironment:
+  ebEnvironment:
     Type: AWS::ElasticBeanstalk::Environment
     Properties:
       ApplicationName:
