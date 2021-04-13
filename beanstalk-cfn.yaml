@@ -48,8 +48,8 @@ Resources:
         Ref: ebApplication
       Description: AWS ElasticBeanstalk Grafana Application Version
       SourceBundle:
-        S3Bucket: !Sub "eb-jsanchez"
-        # S3Bucket: !Sub "teravision-eb-test-jsanchez"
+        # S3Bucket: !Sub "eb-jsanchez"
+        S3Bucket: !Sub "teravision-eb-test1-jsanchez"
         S3Key: deploy.zip
 
   ebConfigurationTemplate:
