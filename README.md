@@ -24,19 +24,13 @@ iam instance profile
 - Versioning
 - acl private
 
+##################################################
+## Steps to create beanstalk env|app with AWS CLI
+# CREATE THE APPLICATION
+aws elasticbeanstalk create-application --application-name myapp --region us-east-1
 
-# Create the application
-aws elasticbeanstalk create-application --application-name avengers --region us-east-1
-
-# Create the environment with custom options
-aws elasticbeanstalk create-environment --application-name avengers \
-    --environment-name staging \
-    --solution-stack-name "64bit Amazon Linux 2018.03 v2.16.6 running Docker 19.03.13-ce" \
-    --option-settings file://options.json \
-    --region us-east-1
-
-
-aws elasticbeanstalk create-environment --application-name avengers \
+# 1. Create the environment with custom options
+aws elasticbeanstalk create-environment --application-name myapp \
     --environment-name staging \
     --solution-stack-name "64bit Amazon Linux 2018.03 v2.16.6 running Docker 19.03.13-ce" \
     --option-settings file://eb-config.json
@@ -46,16 +40,15 @@ aws elasticbeanstalk create-environment --application-name avengers \
 
 
 
-
-# upload the .zip
+# 2. Upload the .zip
 workdir docker
 zip -r deploy.zip *
 aws s3 cp deploy.zip s3://beanstalk-manual/
 
-# upadte the application on beanstalk
+# 3. Update the application on beanstalk
 
 * Upload the application version:
-aws elasticbeanstalk create-application-version --application-name avengers \
+aws elasticbeanstalk create-application-version --application-name myapp \
     --version-label v1 \
     --source-bundle S3Bucket="beanstalk-manual",S3Key="deployment.zip" \
     --auto-create-application \
@@ -63,13 +56,9 @@ aws elasticbeanstalk create-application-version --application-name avengers \
 
 * Deploy the last version
 
-aws elasticbeanstalk update-environment --application-name avengers \
+aws elasticbeanstalk update-environment --application-name myapp \
     --environment-name staging \
     --version-label v1 --region us-east-1
-
-
-
-
 
 
 * Presets
