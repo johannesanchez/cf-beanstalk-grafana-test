@@ -17,15 +17,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    
-    - name: Configure AWS credentials
-      id: creds
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-        # aws-region: ${{ github.event.inputs.region }}
 
     # - name: Set envs
     #     Set envs like: stack version, beanstalk env to update
@@ -42,7 +33,8 @@ jobs:
     #     tag_with_ref: true
     #     tag_with_sha: true
     #     tags: ${{ github.sha }}
-    
+
+# Dockerhub
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
     
@@ -51,10 +43,10 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        repository: ${{ github.repository }}
-        tag_with_ref: true
-        tag_with_sha: true
-        tags: ${{ github.sha }}
+        # repository: ${{ github.repository }}
+        # tag_with_ref: true
+        # tag_with_sha: true
+        # tags: ${{ github.sha }}
     
     - name: Build and push on Docker
       uses: docker/build-push-action@v2
@@ -63,6 +55,15 @@ jobs:
         push: true
         tags: user/app:latest
 
+# AWS
+    - name: Configure AWS credentials
+      id: creds
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+        # aws-region: ${{ github.event.inputs.region }}
 
     - name: zip the dockerfile and docker-compose
       working-directory: ./docker
