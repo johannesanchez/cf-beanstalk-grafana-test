@@ -1,6 +1,6 @@
-name: 'Deploy CloudFormation Stack - Beanstalk,S3' # S3, CF Stack
-on:
-  push:
-    branches:
-    - dev.containers
-    pull_request:
+# name: 'Deploy CloudFormation Stack - Beanstalk,S3' # S3, CF Stack
+# on:
+#   push:
+#     branches:
+#     - dev.containers
+#     pull_request:
