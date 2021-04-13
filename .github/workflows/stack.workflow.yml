@@ -82,6 +82,10 @@ jobs:
         aws-region: us-east-1
         # aws-region: ${{ github.event.inputs.region }}
 
+    # - name: Delete Previous local zip
+    #   working-directory: ./docker
+    #   run: zip -r deploy.zip *
+
     - name: zip the dockerfile and docker-compose
       working-directory: ./docker
       run: zip -r deploy.zip *
