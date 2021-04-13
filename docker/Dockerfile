@@ -1,7 +1,7 @@
 # FROM grafana/grafana:${TAG_GRAFANA}
-ARG VERSION=7.5.2
-# FROM grafana/grafana:7.5.2
-FROM grafana/grafana:${VERSION}
+# ARG VERSION=7.5.2
+FROM grafana/grafana:7.5.2
+# FROM grafana/grafana:${VERSION}
 MAINTAINER Johannes Sanchez <johallengineer@gmail.com>
 
 EXPOSE 3000

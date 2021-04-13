@@ -109,13 +109,13 @@ jobs:
         no-fail-on-empty-changeset: "1"
         # parameter-overrides: "env-bean"
     
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
-      env:
-        SLACK_CHANNEL: general
-        SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Post Content :Teravision:'
-        SLACK_TITLE: Post Title
-        SLACK_USERNAME: TeraBot
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    # - name: Slack Notification
+    #   uses: rtCamp/action-slack-notify@v2
+    #   env:
+    #     SLACK_CHANNEL: general
+    #     SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
+    #     SLACK_ICON: https://github.com/rtCamp.png?size=48
+    #     SLACK_MESSAGE: 'Post Content :Teravision:'
+    #     SLACK_TITLE: Post Title
+    #     SLACK_USERNAME: TeraBot
+    #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
