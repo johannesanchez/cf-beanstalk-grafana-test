@@ -1,0 +1,103 @@
+name: 'Deploy CloudFormation Stack - Beanstalk,S3' # S3, CF Stack
+on:
+  push:
+    branches:
+    - master
+    pull_request:
+
+jobs:
+  beanstalk-prod:
+    name: Deploy Beanstalk Env
+    runs-on: ubuntu-latest
+    env:
+      projectName: CFNBeanstalk
+      # bucketName: teravision-eb-test-jsanchez
+      bucketName: eb-jsanchez
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Configure AWS credentials
+      id: creds
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+        # aws-region: ${{ github.event.inputs.region }}
+
+    # - name: Set envs
+    #     Set envs like: stack version, beanstalk env to update
+
+    # - name: Verify if bucket exist
+
+    # - name: build and push to docker
+    #   working-directory: ./docker
+    #   uses: docker/build-push-action@v1
+    #   with:
+    #     username: ${{ secrets.DOCKER_USERNAME }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }}
+    #     repository: ${{ github.repository }}
+    #     tag_with_ref: true
+    #     tag_with_sha: true
+    #     tags: ${{ github.sha }}
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        repository: ${{ github.repository }}
+        tag_with_ref: true
+        tag_with_sha: true
+        tags: ${{ github.sha }}
+    
+    - name: Build and push on Docker
+      uses: docker/build-push-action@v2
+      with:
+        context: ./docker
+        push: true
+        tags: user/app:latest
+
+
+    - name: zip the dockerfile and docker-compose
+      working-directory: ./docker
+      run: zip -r deploy.zip *
+    
+    - name: list files and dirs
+      working-directory: ./docker
+      run: ls -la
+
+    - name: Create S3 Bucket for the first time
+      working-directory: ./docker
+      run: aws s3 mb s3://${bucketName} --region us-east-1
+      # run: aws s3 mb s3://eb-test-jsanchez --region us-east-1
+
+    - name: Copy .zip dockerfile to S3 bucket
+      working-directory: ./docker
+      run: aws s3 cp deploy.zip s3://${bucketName}
+      # !!! Add new feature::: No syncing if file exist
+
+    - name: Deploy Stack CF
+      id: beanstalk-stack
+      uses: aws-actions/aws-cloudformation-github-deploy@v1
+      with:
+        name: ${projectName}
+        template: beanstalk-cfn.yaml
+        no-fail-on-empty-changeset: "1"
+        # parameter-overrides: "env-bean"
+    
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: general
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_MESSAGE: 'Post Content :Teravision:'
+        SLACK_TITLE: Post Title
+        SLACK_USERNAME: TeraBot
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
