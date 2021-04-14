@@ -1,6 +1,51 @@
-# name: 'Deploy CloudFormation Stack - Beanstalk,S3' # S3, CF Stack
-# on:
-#   push:
-#     branches:
-#     - dev.containers
-#     pull_request:
+name: 'Update Monitoring Container definition on Beansktalk'
+on:
+  push:
+    branches:
+    - dev.containers
+
+jobs:
+  update-monitor-app:
+    name: Update Application
+    runs-on: ubuntu-latest
+    env:
+    bucketName: eb-jsanchez
+    applicationName: CFNBeanstalk-ebApplication-JMIBYC9GY43
+    environmentName: CFNB-ebEn-YHTB61275VOV
+
+  # Load the 
+
+  # apply changes
+  
+  # Push to DockerHub
+
+  # convert
+
+  # Get latest application version and generates next one
+
+  - name: create application version
+    run: aws elasticbeanstalk create-application-version \
+          --application-name beanstalk-jsanchez-stack-ga-sampleApplication-KVEAGSDB6E12  \
+          --version-label v1.0.3     \
+          --source-bundle S3Bucket="eb-jsanchez",S3Key="deploy.zip" \
+          --auto-create-application \
+          --region us-east-1
+
+  
+  - name: Update application to last version
+    run: aws elasticbeanstalk update-environment \
+          --application-name beanstalk-jsanchez-stack-ga-sampleApplication-KVEAGSDB6E12 \
+          --environment-name bean-samp-1HEGBZE9IZ3V3 \
+          --version-label v1.0.3 \
+          --region us-east-1
+
+  steps:
+  - name: Generating Header
+
+
+
+  - name: Convert from docker-compose to Dockerrun.json
+    run: cat docker-compose.yml | docker run --rm -i micahhausler/container-transform >> Dockerrun
+
+
+  - name: aws elasticbeanstalk update-environment --application-name beanstalk-jsanchez-stack-ga-sampleApplication-KVEAGSDB6E12     --environment-name bean-samp-1HEGBZE9IZ3V3     --version-label v1.0.3 --region us-east-1
