@@ -97,6 +97,9 @@ jobs:
       working-directory: ./docker
       run: ls -la
 
+    - name: Show items on s3
+      run: aws s3 ls
+
     - name: Create S3 Bucket for the first time
       working-directory: ./docker
       run: aws s3 mb s3://${bucketName} --region us-east-1
