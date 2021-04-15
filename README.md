@@ -90,3 +90,4 @@ Stack:arn:aws:cloudformation:us-east-1:***:stack/beanstalk-jsanchez-stack-ga/5bd
 
 --- If get result ROLLBACK_COMPLETE -->>> create a new stack (move all the app) and delete the old
 
+#test with new aws account
