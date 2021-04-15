@@ -8,7 +8,7 @@ Parameters:
       - t2.nano
       - t2.micro
     ConstraintDescription: It must be a valid EC2 Type
-    Default: t3.nano
+    Default: t2.micro
     Description: Instance Type for Grafana
     Type: String
 #   BucketNameParameter:
